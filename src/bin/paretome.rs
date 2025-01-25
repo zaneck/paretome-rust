@@ -2,19 +2,22 @@ use same_file::Handle;
 use std::path::Path;
 
 use paretome_rust::pareto::add;
-use structopt::StructOpt;
+use clap::Parser;
 
 /// Command-line arguments for the GCD program.
-#[derive(StructOpt)]
-struct Cli {
+#[derive(Parser, Debug)]
+#[command(version, about, long_about = None)]
+struct Args {
     /// The raw data to pareto sort.
+    #[arg(short, long)]
     input: Option<String>,
     /// The pareto front.
+    #[arg(short, long)]
     output: Option<String>,
 }
 
 fn main(){
-    let args = Cli::from_args();
+    let args = Args::parse();
     println!("Hello, Paretome! {}", add(2, 2));
 
     let input: Result<Handle, std::io::Error> = if args.input.is_none(){
